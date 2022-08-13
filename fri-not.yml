@@ -191,7 +191,7 @@ action:
             object: "{{ trigger.payload_json['after']['label'] }}"
             label: "{{ object | title }}"
             # Dynamic Variables per event
-            initial_home: "{{ presence_entity != '' and is_state(presence_entity, 'home') }}"
+            initial_home: "{{ presence_entity != '' and is_state(presence_entity, '0') }}"
             initial_entered_zones: "{{ trigger.payload_json['after']['entered_zones'] }}"
         - alias: "Notifications enabled for object label"
           condition: template
@@ -209,7 +209,7 @@ action:
                       - device_id: !input notify_device
                         domain: mobile_app
                         type: notify
-                        message: "{{ label }} zlapany na kamerze: {{ camera_name }}"
+                        message: "A {{ label }} was detected on the {{ camera_name }} camera."
                         data: 
                           tag: "{{ id }}"
                           group: "frigate-notification-{{ camera }}"
@@ -238,7 +238,7 @@ action:
                   default:
                     - service: "notify.{{ group_target }}"
                       data:
-                        message: "{{ label }} zlapany na kamerze: {{ camera_name }}""
+                        message: "A {{ label }} was detected on the {{ camera_name }} camera."
                         data: 
                           tag: "{{ id }}"
                           group: "frigate-notification-{{ camera }}"
