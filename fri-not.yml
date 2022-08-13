@@ -1,5 +1,5 @@
 blueprint:
-  name: Frigate Notification (0.10.0)
+  name: Frigate Notification (0.10.0-art)
   description: |
     ## Frigate Mobile App Notification
 
@@ -209,7 +209,7 @@ action:
                       - device_id: !input notify_device
                         domain: mobile_app
                         type: notify
-                        message: "A {{ label }} was detected on the {{ camera_name }} camera."
+                        message: "{{ label }} zlapany na kamerze: {{ camera_name }}"
                         data: 
                           tag: "{{ id }}"
                           group: "frigate-notification-{{ camera }}"
@@ -238,7 +238,7 @@ action:
                   default:
                     - service: "notify.{{ group_target }}"
                       data:
-                        message: "A {{ label }} was detected on the {{ camera_name }} camera."
+                        message: "{{ label }} zlapany na kamerze: {{ camera_name }}""
                         data: 
                           tag: "{{ id }}"
                           group: "frigate-notification-{{ camera }}"
@@ -278,7 +278,7 @@ action:
                   event: "{{ wait.trigger.payload_json }}"
                   loitering: "{{ loiter_timer and event['before']['motionless_count']/fps/60 < loiter_timer and event['after']['motionless_count']/fps/60 >= loiter_timer }}"
                   new_snapshot: "{{ update_thumbnail and event['before']['snapshot_time'] != event['after']['snapshot_time'] }}"
-                  home: "{{ presence_entity != '' and is_state(presence_entity, 'home') }}"
+                  home: "{{ presence_entity != '' and is_state(presence_entity, '0') }}"
                   presence_changed: "{{ presence_entity != '' and as_datetime(event['before']['frame_time']) < states[presence_entity].last_changed }}"
                   last_zones: "{{ event['before']['entered_zones'] }}"
                   entered_zones: "{{ event['after']['entered_zones'] }}"
